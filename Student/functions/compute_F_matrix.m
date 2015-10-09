@@ -17,5 +17,34 @@
 function F = compute_F_matrix( points2d )
 
 
-%------------------------------
-% TODO: FILL IN THIS PART
+
+pA= points2d(:,:,1);
+pB= points2d(:,:,2);
+
+% Points normalized.
+[norm_matA] = compute_normalization_matrices(pA);
+pA_cam_norm = norm_matA*pA;
+
+[norm_matB] = compute_normalization_matrices(pB);
+pB_cam_norm = norm_matB*pB;
+
+% Data sizes.
+n_1 = size(pA,2);
+
+% Calculate Q (there is no beta, so only alpha, remembering lab 1).
+Q = [pB_cam_norm(1,:).*pA_cam_norm(1,:); pB_cam_norm(1,:).*pA_cam_norm(2,:); pB_cam_norm(1,:); ...
+     pB_cam_norm(2,:).*pA_cam_norm(1,:); pB_cam_norm(2,:).*pA_cam_norm(2,:); pB_cam_norm(2,:); ...
+     pA_cam_norm(1,:); pA_cam_norm(2,:); ones(1,n_1)]';
+ Q(isnan(Q)) = 0 ;
+% Compute eigenvectors (V) and eigenvalues (S) of Q.
+[U,S,V] = svd(Q);
+
+% Select the eigenvector h0 with minimun eigenvalue -> H
+F_norm = reshape(V(:,size(Q,2)),3,3)';
+
+% Find E (disabling the normalization).
+F_no_properties = norm_matB'*F_norm*norm_matA; 
+
+% Fulfill matrix E properties.
+[U,S,V] = svd(F_no_properties);
+F = U*[S(1,1) 0 0; 0 S(2,2) 0; 0 0 0]*V'; 
