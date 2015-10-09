@@ -22,6 +22,7 @@ SYNTHETIC_DATA      = 1;
 REAL_DATA_CLICK     = 2;
 REAL_DATA_LOAD      = 3;
 VERSION             = SYNTHETIC_DATA;
+% VERSION             =
 
 if VERSION == SYNTHETIC_DATA
     points2d_file = '../data/data_sphere.mat';
@@ -57,7 +58,7 @@ end
 
 F = compute_F_matrix( points2d );
 
-[cameras camera_centers] = reconstruct_uncalibrated_stereo_cameras( F );
+[cameras, camera_centers] = reconstruct_uncalibrated_stereo_cameras( F );
 
 points3d = reconstruct_point_cloud( cameras, points2d );
 
@@ -85,7 +86,11 @@ else
 end
 
 H = compute_rectification_matrix( points3d(:,indices), points3d_ground_truth );
+points3d = H*points3d;
+cameras(:,:,1) = (H*cameras(:,:,1)')';
+cameras(:,:,2) = (H*cameras(:,:,2)')';
 
+camera_centers = H*camera_centers;
 % Rectify the points:
 
 %------------------------------

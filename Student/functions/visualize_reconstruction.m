@@ -16,7 +16,8 @@
 %                   the model is not drawn with any texture. This is useful
 %                   for synthetic data without texture.
 
-function visualize_reconstruction( points3d, camera_centers, points2d_reference, texture )
+function visualize_reconstruction( points3d, camera_centers, ...
+                                   points2d_reference, texture )
 
 % Convert homogeneous coordinates to cartesian coordinates:
 points3d_cartesian          = homogeneous_to_cartesian( points3d );
@@ -41,21 +42,25 @@ axis equal
 axis vis3d
 grid on
 
+% ------------------------
+% TODO: FILL IN THIS PART
 
-U= points2d_cartesian(:,1);
-V= points2d_cartesian(:,2) ;
 figure(2)
 hold on
-triang = delaunay(U,V);
+%plot3( X, Y, Z, '.');
+ triang = delaunay(points2d_reference(1,:),points2d_reference(2,:));
+% triang = delaunay(X);
+
 plot3( camx, camy, camz, 'ro' );
+U= points2d_cartesian(1,:);
+V= points2d_cartesian(2,:);
 trisurf(triang,X,Y,Z);
+% plot3( triang(:,1), triang(:,2), triang(:,3), 'g' );
 view(126,20)
 axis equal
 axis vis3d
 grid on
- 
 draw_textured_triangles( triang, X, Y, Z, U, V, texture, 32 )
 
 
 end
-
