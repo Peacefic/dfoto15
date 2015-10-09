@@ -23,7 +23,7 @@ REAL_DATA_CLICK     = 2;
 REAL_DATA_LOAD      = 3;
 % VERSION             = SYNTHETIC_DATA;
 % VERSION             = REAL_DATA_CLICK;
-VERSION             = REAL_DATA_LOAD;
+% VERSION             = REAL_DATA_CLICK;
 
 
 if VERSION == SYNTHETIC_DATA
@@ -84,8 +84,8 @@ else
   
     %------------------------------
     indices = [1 2 3 4 5];
-    points3d_ground_truth = [0 10 10  0 10;
-                             0 0 27   0  0;
+    points3d_ground_truth = [0 0  -27  0 0;
+                             0 10 10   0 10;
                              0 0  0    9 9;
                              1 1  1    1 1];
     
