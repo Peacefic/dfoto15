@@ -13,15 +13,20 @@
 
 function [cams, cam_centers] = reconstruct_uncalibrated_stereo_cameras( F )
 
+%Initialize size:
 cams = zeros(3,4,2);
+
+%%%%%% First Camera:
 cams(:,:,1) = eye(3,4);
+%right column is zeros already.
 % S = skewdec(3,3);
+
+%%%%%% Second Camera
 S = [0 1 1;
      -1 0 1;
      -1 -1 0];
-h = null(F');
-
 cams(1:3,1:3,2) = S*F;
+h = null(F');
 cams(1:3,4,2) = h;
 
 cam_centers(:,1) = null(cams(:,:,1));

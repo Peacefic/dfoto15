@@ -21,9 +21,9 @@ image_names_file    = 'names_images_toyhouse.txt';
 SYNTHETIC_DATA      = 1;
 REAL_DATA_CLICK     = 2;
 REAL_DATA_LOAD      = 3;
-% VERSION             = SYNTHETIC_DATA;
+VERSION             = SYNTHETIC_DATA;
 % VERSION             = REAL_DATA_CLICK;
-% VERSION             = REAL_DATA_CLICK;
+% VERSION             = REAL_DATA_LOAD;
 
 
 if VERSION == SYNTHETIC_DATA
@@ -51,7 +51,7 @@ elseif VERSION == REAL_DATA_LOAD
         
     [images,image_names] = load_images_grey( image_names_file, CAMERAS ); 
     load( points2d_file );
-    
+    points2d = points2d(:,1:5,:);
 else
     return
 end
@@ -84,10 +84,10 @@ else
   
     %------------------------------
     indices = [1 2 3 4 5];
-    points3d_ground_truth = [0 0  -27  0 0;
-                             0 10 10   0 10;
-                             0 0  0    9 9;
-                             1 1  1    1 1];
+%     points3d_ground_truth = [0 10 10  0 10 10 ;
+%                              0 0 27   0  0 27;
+%                              0 0  0    9 9 9 ;
+%                              1 1  1    1 1];
     
 end
 

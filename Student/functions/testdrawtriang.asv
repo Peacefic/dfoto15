@@ -1,0 +1,15 @@
+
+image_names_file    = 'names_images_toyhouse.txt';
+CAMERAS = 2;
+img = load_images_grey( image_names_file, CAMERAS );
+texture = img{1};
+H = 768;
+W = 576;
+triang = [1 1 2;
+          1 1 5];
+X = [0 0 W W];
+Y = [0 H 0 H];
+Z = [0 0 0 0];
+U = X;
+V = Y;
+draw_textured_triangles( triang, X, Y, Z, U, V, texture, 32 )

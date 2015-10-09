@@ -28,6 +28,7 @@ zB = points2(3,:)';
 W = [xA yA zA w zero zero -xA.*xB -yA.*xB -zA.*xB -w.*xB;
      zero xA yA zA w zero -xA.*yB -yA.*yB -zA.*yB -w.*yB;
      zero  zero xA yA zA w -xA.*zB -yA.*zB -zA.*zB -w.*zB];
-size(W)
-h = null(W);
+% size(W)
+[~, ~,V] = svd(W);
+h = V(:,end);
 H = reshape(h,[4 4])';

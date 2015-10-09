@@ -51,7 +51,7 @@ elseif VERSION == REAL_DATA_LOAD
         
     [images,image_names] = load_images_grey( image_names_file, CAMERAS ); 
     load( points2d_file );
-    
+    points2d = points2d(:,1:end,:);
 else
     return
 end
@@ -83,15 +83,19 @@ else
     % in order to rectify:
   
     %------------------------------
-    indices = [1 2 3 4 5];
-    points3d_ground_truth = [0 10 10  0 10;
-                             0 0 27   0  0;
-                             0 0  0    9 9;
-                             1 1  1    1 1];
+    indices = [1 2 3 4 5 6 7];
+%     points3d_ground_truth = [0 10 10  0 10 10 ;
+%                              0 0 27   0  0 27;
+%                              0 0  0    9 9 9 ;
+%                              1 1  1    1 1];
+    points3d_ground_truth = [-10 0 0  -10 0 0   -5;
+                             0   0 27  0  0 27  27;
+                             0   0 0   9  9 9   15;
+                             1   1 1   1  1 1    1];
     
 end
 
-H = compute_rectification_matrix( points3d(:,indices), points3d_ground_truth );
+H = compute_rectification_matrix( points3d(:,indices), points3d_ground_truth(:,indices) );
 points3d = H*points3d;
 points3d = bsxfun(@rdivide,points3d,points3d(4,:))
 cameras(:,:,1) = (H*cameras(:,:,1)')';

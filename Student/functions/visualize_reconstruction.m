@@ -47,11 +47,11 @@ grid on
 
 figure(2)
 hold on
-%plot3( X, Y, Z, '.');
+plot3( X, Y, Z, '.');
  triang = delaunay(points2d_reference(1,:),points2d_reference(2,:));
 % triang = delaunay(X);
 
-plot3( camx, camy, camz, 'ro' );
+% plot3( camx, camy, camz, 'ro' );
 U= points2d_cartesian(1,:);
 V= points2d_cartesian(2,:);
 trisurf(triang,X,Y,Z);
